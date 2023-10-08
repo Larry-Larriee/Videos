@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./styles.css">
+        <title>Smurf Cat</title>
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="icon" href="./smurf.jpg">
     </head>
     <body>
         
-        <img alt="robot" src="/content/cool-robot.png">
+        <h1 id="textOne"></h1>
+        <h1 id="textTwo"></h1>
+        <h1 id="textThr"></h1>
+        <img class="hidden" id="smurf-cat" alt="cat" src="./smurf.jpg">
 
-        <script src="" async defer></script>
+        <style>
+            img{
+                max-width: 20rem;
+            }
+            .hidden{
+                display: none;
+            }
+            h1{
+                font-size: larger;
+            }
+
+            @keyframes fadeIn {
+                from{
+                    opacity: 0;
+                }
+                to{
+                    opacity: 1;
+                }
+            }
+
+            .fadeOneSec{
+                animation: fadeIn 1s ease-in-out;
+            }
+        </style>
+
+        <script>
+            let smurfCat = document.getElementById("smurf-cat");
+
+            let t1 = document.getElementById("textOne");
+            let t2 = document.getElementById("textTwo");
+            let t3 = document.getElementById("textThr");
+
+            function moveInText(text, headerText){
+                return new Promise((resolve) => {
+                    text.innerHTML = headerText;
+                    text.classList.toggle("fadeOneSec");
+
+                    setTimeout(() => {
+                        removeText(text);    
+                        resolve(); 
+                    }, 1000);
+                });
+            }
+
+            function removeText(textId){
+                textId.classList.add("hidden");
+            }
+
+            async function textSequence(){
+                await moveInText(t1, "We live");
+                await moveInText(t2, "We love");
+                await moveInText(t3, "We lie");
+            }
+
+            textSequence().then(() => {
+                smurfCat.classList.remove("hidden");
+                smurfCat.classList.add("fadeOneSec");
+            });
+
+        </script>
     </body>
 </html>
